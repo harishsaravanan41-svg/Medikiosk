@@ -1,0 +1,23 @@
+# Core Web & API Framework
+Flask>=3.0.0
+flask-cors>=4.0.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# LLM & AI Clients
+openai>=1.0.0
+httpx>=0.25.0
+
+# Speech-to-Text (Whisper)
+openai-whisper>=20231117
+torch>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+imageio-ffmpeg>=0.4.9
+
+# Text-to-Speech (TTS)
+gTTS>=2.4.0
+pyttsx3>=2.90
+
+# Optional ASGI Server
+uvicorn>=0.24.0

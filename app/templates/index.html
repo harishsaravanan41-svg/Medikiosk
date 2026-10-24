@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="description" content="MediKiosk AI - Professional Multilingual Healthcare & Clinical History Platform">
+  <meta name="theme-color" content="#0f284d">
+  <title>MediKiosk AI - Professional Healthcare & Clinical History Platform</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'%3E%3Cpath d='M12 2v20M2 12h20' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="medikiosk-theme">
+
+  <!-- Background Ambient Glow -->
+  <div class="kiosk-bg-decoration" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- Global App Top Navigation Bar -->
+  <header class="app-global-nav" id="appGlobalNav">
+    <div class="nav-container">
+      <div class="nav-brand" id="brandHomeLink" role="button" tabindex="0">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="#2563EB"/>
+            <path d="M14 6V22M6 14H22" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title" data-i18n="brand_name">MediKiosk</span>
+          <span class="nav-brand-tag" data-i18n="brand_tagline">AI-Powered Clinical History Platform</span>
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <!-- Global Language Dropdown -->
+        <div class="global-lang-dropdown" id="globalLangDropdownWrap">
+          <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <select id="globalLangSelect" class="lang-select-elem" aria-label="Select Language">
+            <option value="en">English</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="ml">മലയാളം (Malayalam)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+          </select>
+        </div>
+
+        <!-- Role Quick Navigation Buttons -->
+        <div class="nav-role-buttons" id="navRoleButtons">
+          <button type="button" class="btn-nav-role" id="btnNavPatient" data-i18n="patient_role">Patient</button>
+          <button type="button" class="btn-nav-role btn-nav-doctor" id="btnNavDoctor" data-i18n="doctor_role">Doctor</button>
+        </div>
+
+        <!-- Authenticated User Profile Pill -->
+        <div class="user-auth-pill" id="userAuthPill" style="display: none;">
+          <span class="auth-role-badge" id="authRoleBadge">Patient</span>
+          <span class="auth-user-name" id="authUserName">Ravi Kumar</span>
+          <button type="button" class="btn-nav-logout" id="btnNavLogout" title="Logout" data-i18n="logout_btn">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================== -->
+  <!-- VIEW CONTAINER (Single-Page App View Router)                  -->
+  <!-- ============================================================== -->
+  <main class="app-view-container" id="appViewContainer">
+
+    <!-- ============================================================ -->
+    <!-- 1. VIEW: LANDING PAGE                                         -->
+    <!-- ============================================================ -->
+    <section class="app-view active" id="viewLanding">
+      <div class="landing-hero-section">
+        <div class="landing-hero-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>Healthcare Clinical Triage &amp; Intake Platform</span>
+          </div>
+          <h1 class="hero-title" data-i18n="landing_hero_title">
+            Your medical history, captured naturally before your consultation.
+          </h1>
+          <p class="hero-subtitle" data-i18n="landing_hero_desc">
+            Voice + Touch • Multilingual • Patient-Friendly • Doctor-Ready
+          </p>
+
+          <div class="hero-action-row">
+            <button type="button" class="btn-hero-primary" id="btnLandingGetStarted">
+              <span data-i18n="get_started">Get Started</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" class="btn-hero-secondary" id="btnLandingDoctorPortal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span>Doctor Portal</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="landing-hero-graphic">
+          <div class="graphic-card-visual">
+            <div class="visual-header">
+              <span class="visual-pill pulse">🎙️ Real-Time Intake Active</span>
+              <span class="visual-meta">ABHA Integrated</span>
+            </div>
+            <div class="visual-mock-chat">
+              <div class="mock-bubble user-bubble">
+                <p>நேத்து முதல் மார்பு வலிக்குது, கொஞ்சம் மூச்சு வாங்குது</p>
+                <span class="mock-time">09:02 AM • Tamil Voice</span>
+              </div>
+              <div class="mock-bubble ai-bubble">
+                <p>சரி. மார்பு வலி எந்த பகுதியில் இருக்கிறது? இடது பக்கமா அல்லது நடுவிலா?</p>
+                <span class="mock-time">09:02 AM • AI Triage</span>
+              </div>
+            </div>
+            <div class="visual-summary-box">
+              <div class="summary-label">🩺 Structured Triage Generated:</div>
+              <div class="summary-tags">
+                <span class="tag tag-urgent">Urgent: Chest Pain</span>
+                <span class="tag">Onset: 1 day</span>
+                <span class="tag">Dyspnea</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 Key Features Section -->
+      <div class="landing-features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎙️</div>
+          <h3 class="feature-title" data-i18n="feature_voice_title">Voice Conversation</h3>
+          <p class="feature-desc" data-i18n="feature_voice_desc">AI-assisted natural voice interaction in your native language with 80Hz acoustic noise filter.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👆</div>
+          <h3 class="feature-title" data-i18n="feature_touch_title">Touch Interaction</h3>
+          <p class="feature-desc" data-i18n="feature_touch_desc">Simple guided touchscreen input designed for elderly users and fast clinic triage.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3 class="feature-title" data-i18n="feature_lang_title">Multilingual</h3>
+          <p class="feature-desc" data-i18n="feature_lang_desc">Full platform localization across 7 Indian languages (Tamil, Hindi, Telugu, Malayalam, etc.).</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📄</div>
+          <h3 class="feature-title" data-i18n="feature_doc_title">Document Digitization</h3>
+          <p class="feature-desc" data-i18n="feature_doc_desc">Upload prescriptions and test reports, and view side-by-side OCR/AI extractions.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🩺</div>
+          <h3 class="feature-title" data-i18n="feature_ready_title">Doctor Ready</h3>
+          <p class="feature-desc" data-i18n="feature_ready_desc">Structured clinical history and HPI summary generated before the doctor consultation begins.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3 class="feature-title" data-i18n="feature_secure_title">Secure &amp; Private</h3>
+          <p class="feature-desc" data-i18n="feature_secure_desc">Consent-based patient data management with strict patient-to-patient memory isolation.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- 2. VIEW: LANGUAGE SELECTION                                   -->
+    <!-- ============================================================ -->
+    <section class="app-view" id="viewLanguageSelection">
+      <div class="auth-card-wrapper">
+        <div class="auth-card language-picker-card">
+          <div class="auth-header">
+            <div class="auth-icon-circle">🌐</div>
+            <h2 class="auth-title" data-i18n="choose_language">Choose Your Language</h2>
+            <p class="auth-subtitle" data-i18n="choose_language_desc">Select the language you prefer for your healthcare consultation</p>
+          </div>
+
+          <div class="lang-grid-selector" id="langGridContainer">
+            <button type="button" class="lang-tile-btn" data-lang="ta">
+              <span class="native-script">தமிழ்</span>
+              <span class="latin-script">Tamil</span>
+            </button>
+            <button type="button" class="lang-tile-btn active" data-lang="en">
+              <span class="native-script">English</span>
+              <span class="latin-script">English</span>
+            </button>
+            <button type="button" class="lang-tile-btn" data-lang="hi">
+              <span class="native-script">हिन्दी</span>
+              <span class="latin-script">Hindi</span>
+            </button>
+            <button type="button" class="lang-tile-btn" data-lang="ml">
+              <span class="native-script">മലയാളം</span>
+              <span class="latin-script">Malayalam</span>
+            </button>
+            <button type="button" class="lang-tile-btn" data-lang="kn">
+              <span class="native-script">ಕನ್ನಡ</span>
+              <span class="latin-script">Kannada</span>
+            </button>
+            <button type="button" class="lang-tile-btn" data-lang="bn">
+              <span class="native-script">বাংলা</span>
+              <span class="latin-script">Bengali</span>
+            </button>
+            <button type="button" class="lang-tile-btn" data-lang="te">
+              <span class="native-script">తెలుగు</span>
+              <span class="latin-script">Telugu</span>
+            </button>
+          </div>
+
+          <div class="auth-actions">
+            <button type="button" class="btn-primary-block" id="btnConfirmLangSelection">
+              <span data-i18n="continue">Continue</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- 3. VIEW: ROLE SELECTION                                       -->
+    <!-- ============================================================ -->
+    <section class="app-view" id="viewRoleSelection">
+      <div class="auth-card-wrapper">
+        <div class="auth-card role-picker-card">
+          <div class="auth-header">
+            <h2 class="auth-title" data-i18n="brand_name">Welcome to MediKiosk</h2>
+            <p class="auth-subtitle" data-i18n="select_role">How would you like to continue?</p>
+          </div>
+
+          <div class="role-grid-container">
+            <!-- Patient Role Card -->
+            <div class="role-card" id="cardRolePatient" role="button" tabindex="0">
+              <div class="role-card-icon patient-icon">👤</div>
+              <h3 class="role-card-title" data-i18n="patient_role">Patient</h3>
+              <p class="role-card-desc" data-i18n="patient_role_desc">Start voice &amp; touch health triage check-in with your ABHA ID</p>
+              <span class="role-card-arrow">Continue as Patient →</span>
+            </div>
+
+            <!-- Doctor Role Card -->
+            <div class="role-card" id="cardRoleDoctor" role="button" tabindex="0">
+              <div class="role-card-icon doctor-icon">🩺</div>
+              <h3 class="role-card-title" data-i18n="doctor_role">Doctor</h3>
+              <p class="role-card-desc" data-i18n="doctor_role_desc">Access clinical histories, consultations, documents &amp; patient records</p>
+              <span class="role-card-arrow">Continue as Doctor →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- 4. VIEW: PATIENT LOGIN (ABHA Check-in)                        -->
+    <!-- ============================================================ -->
+    <section class="app-view" id="viewPatientLogin">
+      <div class="auth-card-wrapper">
+        <div class="auth-card login-form-card">
+          <div class="auth-header">
+            <div class="auth-icon-circle">👤</div>
+            <h2 class="auth-title" data-i18n="patient_login_title">Patient Check-in (ABHA)</h2>
+            <p class="auth-subtitle" data-i18n="patient_login_desc">Enter your demo ABHA Health ID to begin</p>
+          </div>
+
+          <form id="formPatientLogin" class="auth-form">
+            <div class="form-group">
+              <label for="inputAbhaId" class="form-label" data-i18n="abha_id_label">ABHA ID / Health ID</label>
+              <div class="input-with-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="12" y2="16"/></svg>
+                <input type="text" id="inputAbhaId" class="form-input" placeholder="e.g. DEMO-ABHA-001" value="DEMO-ABHA-001" required autocomplete="off">
+              </div>
+            </div>
+
+            <!-- Demo Quick Select Chips -->
+            <div class="demo-chips-box">
+              <span class="chips-title" data-i18n="demo_credentials_title">Demo Quick-Fill Accounts:</span>
+              <div class="chips-row">
+                <button type="button" class="demo-id-chip" data-abha="DEMO-ABHA-001">DEMO-ABHA-001 (Ravi Kumar)</button>
+                <button type="button" class="demo-id-chip" data-abha="DEMO-ABHA-002">DEMO-ABHA-002 (Lakshmi Raman)</button>
+                <button type="button" class="demo-id-chip" data-abha="DEMO-ABHA-003">DEMO-ABHA-003 (Priya Sharma)</button>
+                <button type="button" class="demo-id-chip" data-abha="DEMO-ABHA-004">DEMO-ABHA-004 (Mohammed Farooq)</button>
+                <button type="button" class="demo-id-chip" data-abha="DEMO-ABHA-005">DEMO-ABHA-005 (Ananya Das)</button>
+              </div>
+            </div>
+
+            <div class="form-error-msg" id="patientLoginError" style="display: none;"></div>
+
+            <button type="submit" class="btn-primary-block" id="btnPatientSubmitLogin">
+              <span data-i18n="continue">Continue</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+
+          <div class="auth-footer-prompt">
+            <span data-i18n="new_patient_prompt">First time at MediKiosk?</span>
+            <button type="button" class="btn-link-action" id="btnQuickGuestPatient" data-i18n="register_patient">Register New Patient</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- 5. VIEW: DOCTOR LOGIN                                         -->
+    <!-- ============================================================ -->
+    <section class="app-view" id="viewDoctorLogin">
+      <div class="auth-card-wrapper">
+        <div class="auth-card login-form-card">
+          <div class="auth-header">
+            <div class="auth-icon-circle doc-circle">🩺</div>
+            <h2 class="auth-title" data-i18n="doctor_login_title">Doctor Portal Login</h2>
+            <p class="auth-subtitle" data-i18n="doctor_login_desc">Sign in to access patient clinical histories and charts</p>
+          </div>
+
+          <form id="formDoctorLogin" class="auth-form">
+            <div class="form-group">
+              <label for="inputDoctorEmail" class="form-label" data-i18n="email_label">Doctor Email</label>
+              <div class="input-with-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input type="email" id="inputDoctorEmail" class="form-input" placeholder="doctor1@demo.medikiosk" value="doctor1@demo.medikiosk" required autocomplete="username">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputDoctorPassword" class="form-label" data-i18n="password_label">Password</label>
+              <div class="input-with-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="inputDoctorPassword" class="form-input" placeholder="DemoDoc#123" value="DemoDoc#123" required autocomplete="current-password">
+              </div>
+            </div>
+
+            <!-- Demo Doctor Quick Select Chips -->
+            <div class="demo-chips-box">
+              <span class="chips-title" data-i18n="demo_credentials_title">Demo Doctor Accounts:</span>
+              <div class="chips-row">
+                <button type="button" class="demo-doc-chip" data-email="doctor1@demo.medikiosk">Dr. Arun Kumar (Cardiology)</button>
+                <button type="button" class="demo-doc-chip" data-email="doctor2@demo.medikiosk">Dr. Sneha Reddy (Internal Med)</button>
+                <button type="button" class="demo-doc-chip" data-email="doctor3@demo.medikiosk">Dr. Rajesh Mehra (Emergency)</button>
+              </div>
+            </div>
+
+            <div class="form-error-msg" id="doctorLoginError" style="display: none;"></div>
+
+            <button type="submit" class="btn-primary-block" id="btnDoctorSubmitLogin">
+              <span data-i18n="login_btn">Sign In</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- 6. VIEW: PATIENT PORTAL (Active Conversational Kiosk)         -->
+    <!-- ============================================================ -->
+    <section class="app-view" id="viewPatientPortal">
+      <div class="patient-portal-layout">
+
+        <!-- Portal Top Patient Ribbon -->
+        <div class="portal-patient-ribbon">
+          <div class="ribbon-patient-info">
+            <div class="patient-avatar-sm">👤</div>
+            <div class="patient-meta">
+              <span class="patient-name-ribbon" id="portalPatientName">Ravi Kumar</span>
+              <span class="patient-abha-ribbon" id="portalPatientAbha">ABHA ID: DEMO-ABHA-001</span>
+            </div>
+          </div>
+
+          <div class="ribbon-actions">
+            <!-- AI Health Probe Pill -->
+            <div class="ai-status-pill online" id="patientAiStatusPill">
+              <span class="status-pulse-dot"></span>
+              <span class="status-text">AI Services Online</span>
+            </div>
+            <button type="button" class="btn-ribbon-action" id="btnPatientUploadDoc" data-i18n="upload_btn">📄 Upload Document</button>
+            <button type="button" class="btn-ribbon-action btn-end-session" id="btnPatientEndSession">End Session</button>
+          </div>
+        </div>
+
+        <div class="portal-main-grid">
+          <!-- Center Chat Stream Section -->
+          <div class="portal-chat-section">
+            <div class="chat-messages-scroll" id="patientChatMessages">
+              <!-- Initial Welcome Message -->
+              <div class="chat-bubble-row ai-row">
+                <div class="avatar-bubble ai-avatar" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+                </div>
+                <div class="message-bubble-wrapper">
+                  <div class="message-bubble ai-bubble">
+                    <div class="bubble-content">
+                      <p><strong>Hello! I'm MediKiosk AI.</strong></p>
+                      <p>You can speak naturally or type your symptoms. I will help record your health history for the doctor.</p>
+                    </div>
+                    <span class="bubble-timestamp">Just now</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Voice State Indicator Pill -->
+            <div class="voice-state-indicator-wrap">
+              <div class="voice-state-pill" id="voiceStatePill">
+                <span class="voice-state-dot" id="voiceStateDot"></span>
+                <span class="voice-state-label" id="voiceStateLabel">🎤 Tap to speak</span>
+              </div>
+            </div>
+
+            <!-- Suggestion Chips Row -->
+            <div class="chips-scroll-container">
+              <div class="chips-list">
+                <button type="button" class="chip-btn" data-text="I have chest pain since yesterday">Chest pain</button>
+                <button type="button" class="chip-btn" data-text="I have a fever for 3 days">Fever (3 days)</button>
+                <button type="button" class="chip-btn" data-text="எனக்கு தலைவலி அதிகமாக உள்ளது">தலைவலி (Tamil)</button>
+                <button type="button" class="chip-btn" data-text="मुझे पेट में दर्द हो रहा है">पेट दर्द (Hindi)</button>
+              </div>
+            </div>
+
+            <!-- Chat Input Capsule -->
+            <div class="chat-input-capsule">
+              <!-- Voice Microphone Button -->
+              <button class="mic-round-btn" id="btnVoiceRecord" title="Click to speak" aria-label="Voice input">
+                <svg class="mic-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/>
+                </svg>
+              </button>
+
+              <textarea id="patientTextInput" class="chat-text-area" rows="1" placeholder="Describe your symptoms or ask a question..." data-i18n-placeholder="type_placeholder"></textarea>
+
+              <button class="send-round-btn" id="btnSendPatientText" title="Send message" aria-label="Send message">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Sidebar: Live Structured Triage Card -->
+          <aside class="portal-triage-panel">
+            <div class="panel-header">
+              <h3 class="panel-title">🩺 Live Clinical Summary</h3>
+              <span class="panel-badge" id="triageUrgencyBadge">Assessing</span>
+            </div>
+
+            <div class="triage-fields-list">
+              <div class="triage-field-item">
+                <span class="field-label">Chief Complaint</span>
+                <span class="field-val" id="triageChiefComplaint">Listening to patient...</span>
+              </div>
+              <div class="triage-field-item">
+                <span class="field-label">Department</span>
+                <span class="field-val" id="triageDepartment">General Medicine</span>
+              </div>
+              <div class="triage-field-item">
+                <span class="field-label">Identified Symptoms</span>
+                <div class="symptoms-chips" id="triageSymptomsList">
+                  <span class="empty-symptom-note">No symptoms stated yet</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-footer-note">
+              <p>🔒 Summaries are formatted for the doctor and grounded in isolated patient memory.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- 7. VIEW: DOCTOR PORTAL                                        -->
+    <!-- ============================================================ -->
+    <section class="app-view" id="viewDoctorPortal">
+      <div class="doctor-portal-layout">
+
+        <!-- Doctor Top Bar -->
+        <header class="doctor-top-bar">
+          <div class="doc-profile-snippet">
+            <div class="doc-avatar">👨‍⚕️</div>
+            <div class="doc-info">
+              <h2 class="doc-name" id="docNameDisplay">Dr. Arun Kumar, MD</h2>
+              <span class="doc-spec" id="docSpecDisplay">General Medicine &amp; Cardiology • Apollo Specialty</span>
+            </div>
+          </div>
+
+          <div class="doc-search-wrapper">
+            <form id="formDocPatientSearch" class="doc-search-form">
+              <input type="text" id="inputDocSearchAbha" class="doc-search-input" placeholder="Search Patient by ABHA ID (e.g. DEMO-ABHA-001)..." data-i18n-placeholder="search_patient_placeholder">
+              <button type="submit" class="btn-doc-search" data-i18n="search_btn">Search</button>
+            </form>
+          </div>
+
+          <div class="doc-actions">
+            <button type="button" class="btn-doc-logout" id="btnDocLogout" data-i18n="logout_btn">Logout</button>
+          </div>
+        </header>
+
+        <!-- Doctor Main Sub-Views Container -->
+        <div class="doctor-subview-container" id="docSubviewContainer">
+
+          <!-- 7A. DOCTOR DASHBOARD SUBVIEW -->
+          <div class="doc-subview active" id="docSubviewDashboard">
+            <!-- Metrics Row -->
+            <div class="doc-metrics-row">
+              <div class="metric-card">
+                <div class="metric-icon metric-blue">📋</div>
+                <div class="metric-body">
+                  <span class="metric-val" id="metricNewCases">12</span>
+                  <span class="metric-label">New Cases Waiting</span>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-icon metric-red">🚨</div>
+                <div class="metric-body">
+                  <span class="metric-val" id="metricPriority">2</span>
+                  <span class="metric-label">Priority Triage</span>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-icon metric-green">✅</div>
+                <div class="metric-body">
+                  <span class="metric-val" id="metricCompleted">18</span>
+                  <span class="metric-label">Consultations Done</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Patients Table Card -->
+            <div class="doc-card-container">
+              <div class="doc-card-header">
+                <h3 class="card-heading">Recent Patients Ready for Consultation</h3>
+                <span class="card-sub-info">Click to search ABHA or open record</span>
+              </div>
+              <div class="table-responsive">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th>Patient Name</th>
+                      <th>ABHA ID</th>
+                      <th>Age / Gender</th>
+                      <th>Chief Complaint</th>
+                      <th>Urgency</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableRecentPatientsBody">
+                    <tr>
+                      <td><strong>Ravi Kumar</strong></td>
+                      <td><code>DEMO-ABHA-001</code></td>
+                      <td>42 / Male</td>
+                      <td>Chest pain since yesterday</td>
+                      <td><span class="badge badge-urgent">Urgent</span></td>
+                      <td><span class="badge badge-ready">History Ready</span></td>
+                      <td><button type="button" class="btn-table-action btn-open-demo" data-abha="DEMO-ABHA-001">Open Patient</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Lakshmi Raman</strong></td>
+                      <td><code>DEMO-ABHA-002</code></td>
+                      <td>58 / Female</td>
+                      <td>High BP &amp; Knee pain</td>
+                      <td><span class="badge badge-moderate">Moderate</span></td>
+                      <td><span class="badge badge-ready">History Ready</span></td>
+                      <td><button type="button" class="btn-table-action btn-open-demo" data-abha="DEMO-ABHA-002">Open Patient</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Priya Sharma</strong></td>
+                      <td><code>DEMO-ABHA-003</code></td>
+                      <td>29 / Female</td>
+                      <td>Migraine headache</td>
+                      <td><span class="badge badge-low">Low</span></td>
+                      <td><span class="badge badge-ready">History Ready</span></td>
+                      <td><button type="button" class="btn-table-action btn-open-demo" data-abha="DEMO-ABHA-003">Open Patient</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7B. PATIENT VERIFICATION SCREEN SUBVIEW -->
+          <div class="doc-subview" id="docSubviewVerification">
+            <div class="verification-card-wrapper">
+              <div class="verification-card">
+                <div class="verify-header">
+                  <div class="verify-icon">🔍</div>
+                  <h2 class="verify-title" data-i18n="patient_details">Patient Details</h2>
+                  <p class="verify-subtitle" data-i18n="is_correct_patient">Is this the correct patient?</p>
+                </div>
+
+                <div class="verify-patient-details-grid">
+                  <div class="detail-cell">
+                    <span class="cell-label">Patient Name</span>
+                    <span class="cell-val" id="verifyPatientName">Ravi Kumar</span>
+                  </div>
+                  <div class="detail-cell">
+                    <span class="cell-label">ABHA ID</span>
+                    <span class="cell-val" id="verifyPatientAbha">DEMO-ABHA-001</span>
+                  </div>
+                  <div class="detail-cell">
+                    <span class="cell-label">Age / Gender</span>
+                    <span class="cell-val" id="verifyPatientAgeGender">42 / Male</span>
+                  </div>
+                  <div class="detail-cell">
+                    <span class="cell-label">Phone</span>
+                    <span class="cell-val" id="verifyPatientPhone">+91 98765 43210</span>
+                  </div>
+                  <div class="detail-cell full-width">
+                    <span class="cell-label">Known Chronic Conditions</span>
+                    <span class="cell-val" id="verifyPatientConditions">Type 2 Diabetes Mellitus</span>
+                  </div>
+                </div>
+
+                <div class="verify-actions-row">
+                  <button type="button" class="btn-verify-reject" id="btnVerifyReject" data-i18n="not_correct_btn">
+                    ✕ Not Correct (Back)
+                  </button>
+                  <button type="button" class="btn-verify-accept" id="btnVerifyAccept" data-i18n="correct_btn">
+                    ✓ Yes, Open Patient Record
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7C. PATIENT CLINICAL WORKSTATION SUBVIEW -->
+          <div class="doc-subview" id="docSubviewWorkstation">
+            <!-- Patient Header Banner in Workstation -->
+            <div class="workstation-patient-bar">
+              <div class="patient-summary-col">
+                <div class="avatar-circle">👤</div>
+                <div>
+                  <h2 class="patient-main-name" id="wsPatientName">Ravi Kumar</h2>
+                  <span class="patient-sub-meta" id="wsPatientMeta">42 Yrs • Male • ABHA: DEMO-ABHA-001 • Phone: +91 98765 43210</span>
+                </div>
+              </div>
+              <div class="workstation-encounter-badge">
+                <span class="enc-tag" id="wsEncounterDate">Active Visit: 06 Sep 2026</span>
+              </div>
+            </div>
+
+            <!-- 4 Navigation Tabs -->
+            <div class="workstation-tabs-bar">
+              <button type="button" class="ws-tab-btn active" data-tab="tabCurrentProblem" data-i18n="current_problem">Current Problem / AI History</button>
+              <button type="button" class="ws-tab-btn" data-tab="tabPreviousConsultations" data-i18n="previous_consultations">Previous Consultations</button>
+              <button type="button" class="ws-tab-btn" data-tab="tabUploadedDocs" data-i18n="uploaded_documents">Patient Uploaded Documents</button>
+              <button type="button" class="ws-tab-btn" data-tab="tabTimeline" data-i18n="patient_timeline">Patient Timeline</button>
+            </div>
+
+            <!-- Tab Content 1: Current Problem & AI History & Doctor Consultation Form -->
+            <div class="ws-tab-content active" id="tabCurrentProblem">
+              <div class="workstation-split-grid">
+                
+                <!-- Left Column: Structured AI Clinical History -->
+                <div class="history-view-card">
+                  <div class="card-title-bar">
+                    <h3 class="card-title">🤖 AI-Generated Clinical History</h3>
+                    <div class="history-action-btns">
+                      <button type="button" class="btn-action-outline" id="btnEditAiHistory" data-i18n="edit_history">Edit History</button>
+                      <button type="button" class="btn-action-solid" id="btnVerifyAiHistory" data-i18n="verify_history">Verify History</button>
+                    </div>
+                  </div>
+
+                  <div class="clinical-history-body" id="clinicalHistoryBody">
+                    <div class="history-section">
+                      <h4 class="section-title">Chief Complaint</h4>
+                      <p class="section-text" id="aiChiefComplaintText">Chest pain since yesterday</p>
+                    </div>
+
+                    <div class="history-section">
+                      <h4 class="section-title">History of Present Illness (HPI)</h4>
+                      <ul class="hpi-list" id="aiHpiList">
+                        <li><strong>Onset:</strong> Yesterday morning (approx. 24 hours ago)</li>
+                        <li><strong>Character:</strong> Heavy, pressure-like sensation behind the sternum</li>
+                        <li><strong>Location:</strong> Substernal center of chest</li>
+                        <li><strong>Radiation:</strong> Radiating to left shoulder and arm</li>
+                        <li><strong>Aggravating:</strong> Exertion, brisk walking up stairs</li>
+                        <li><strong>Relieving:</strong> Subsides slightly with seated rest</li>
+                        <li><strong>Associated:</strong> Shortness of breath, mild diaphoresis</li>
+                      </ul>
+                    </div>
+
+                    <div class="history-section">
+                      <h4 class="section-title">Past Medical History</h4>
+                      <p class="section-text" id="aiPastMedText">Type 2 Diabetes Mellitus (5 years duration, regular control)</p>
+                    </div>
+
+                    <div class="history-section">
+                      <h4 class="section-title">Medication History</h4>
+                      <p class="section-text" id="aiMedicationsText">Tab Metformin 500mg BD after meals</p>
+                    </div>
+
+                    <div class="history-section">
+                      <h4 class="section-title">Allergies</h4>
+                      <p class="section-text text-danger" id="aiAllergiesText">Penicillin (developed severe generalized urticarial rash in 2018)</p>
+                    </div>
+
+                    <div class="history-section">
+                      <h4 class="section-title">Family History</h4>
+                      <p class="section-text" id="aiFamilyText">Father had acute myocardial infarction at age 52; Mother is diabetic</p>
+                    </div>
+
+                    <div class="history-section">
+                      <h4 class="section-title">Personal History</h4>
+                      <p class="section-text" id="aiPersonalText">Non-smoker, sedentary office work</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Column: Doctor Consultation Form -->
+                <div class="consultation-form-card">
+                  <div class="card-title-bar">
+                    <h3 class="card-title">🩺 Doctor Consultation &amp; Prescription</h3>
+                    <span class="status-indicator">Permanent Record</span>
+                  </div>
+
+                  <form id="formDoctorConsultation" class="doc-consult-form">
+                    <div class="form-group">
+                      <label for="docClinicalFindings" class="form-label" data-i18n="clinical_findings">Clinical Findings</label>
+                      <textarea id="docClinicalFindings" class="form-textarea" rows="2" placeholder="Vitals, physical examination findings (e.g. BP: 138/88 mmHg, PR: 84/min, Chest: S1 S2 heard)..." required>BP: 136/86 mmHg, PR: 82 bpm. S1, S2 audible, no murmurs. Bilateral breath sounds vesicular, clear. No pedal edema.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="docAssessment" class="form-label" data-i18n="assessment">Assessment</label>
+                      <textarea id="docAssessment" class="form-textarea" rows="2" placeholder="Clinical impression and differential diagnosis..." required>Atypical angina / Rule out Acute Coronary Syndrome in diabetic patient with exertional chest discomfort.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="docDiagnosis" class="form-label" data-i18n="diagnosis">Diagnosis</label>
+                      <input type="text" id="docDiagnosis" class="form-input" placeholder="Primary diagnosis (e.g. Angina Pectoris / CAD)..." value="Angina Pectoris - Stable Exertional" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="docPrescription" class="form-label" data-i18n="treatment_prescription">Treatment / Prescription</label>
+                      <textarea id="docPrescription" class="form-textarea" rows="3" placeholder="Prescriptions, dosages, diet and lifestyle instructions..." required>1. Tab Aspirin 75mg OD after lunch
+2. Tab Sorbitrate 5mg sublingual SOS for chest pain
+3. Tab Atorvastatin 20mg at bedtime
+4. 12-Lead ECG &amp; 2D-Echocardiogram urgently</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="docFollowUp" class="form-label" data-i18n="follow_up">Follow-up</label>
+                      <input type="text" id="docFollowUp" class="form-input" placeholder="e.g. Review with ECG &amp; Echo reports in 48 hours, or emergency SOS..." value="Review with 12-lead ECG &amp; Troponin reports tomorrow, or emergency SOS if pain intensifies.">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="docNotes" class="form-label" data-i18n="doctor_notes">Doctor Notes</label>
+                      <input type="text" id="docNotes" class="form-input" placeholder="Confidential clinical notes..." value="Patient advised strict adherence and avoidance of heavy physical exertion.">
+                    </div>
+
+                    <button type="submit" class="btn-save-consultation" id="btnSaveConsultation">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                      <span data-i18n="save_consultation">Save Consultation</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab Content 2: Previous Consultations List -->
+            <div class="ws-tab-content" id="tabPreviousConsultations">
+              <div class="doc-card-container">
+                <div class="doc-card-header">
+                  <h3 class="card-heading" data-i18n="previous_consultations">Previous Consultations</h3>
+                  <span class="card-sub-info">Permanent historical records — never overwritten</span>
+                </div>
+                <div class="encounters-timeline-list" id="previousConsultationsList">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab Content 3: Patient Uploaded Documents -->
+            <div class="ws-tab-content" id="tabUploadedDocs">
+              <div class="doc-card-container">
+                <div class="doc-card-header">
+                  <h3 class="card-heading" data-i18n="uploaded_documents">Patient Uploaded Documents</h3>
+                  <span class="card-sub-info">Click [View Document &amp; OCR] to compare original with AI extracted information</span>
+                </div>
+                <div class="documents-grid" id="uploadedDocumentsGrid">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab Content 4: Unified Patient Timeline -->
+            <div class="ws-tab-content" id="tabTimeline">
+              <div class="doc-card-container">
+                <div class="doc-card-header">
+                  <h3 class="card-heading" data-i18n="patient_timeline">Patient Timeline</h3>
+                  <span class="card-sub-info">Chronological combination of consultations and document upload events</span>
+                </div>
+                <div class="timeline-vertical-feed" id="patientTimelineFeed">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- MODAL DIALOGS                                                  -->
+  <!-- ============================================================== -->
+
+  <!-- Modal: Consultation Saved Confirmation -->
+  <div class="modal-overlay" id="modalConsultationSaved">
+    <div class="modal-card modal-success-card">
+      <div class="modal-icon-circle">✅</div>
+      <h2 class="modal-title">Consultation Saved</h2>
+      <p class="modal-subtitle" data-i18n="consultation_saved_msg">Consultation successfully saved to patient medical record.</p>
+
+      <div class="saved-meta-box">
+        <div class="saved-meta-row">
+          <span>Date:</span>
+          <strong id="savedModalDate">06 September 2026</strong>
+        </div>
+        <div class="saved-meta-row">
+          <span>Patient:</span>
+          <strong id="savedModalPatient">Ravi Kumar</strong>
+        </div>
+        <div class="saved-meta-row">
+          <span>Encounter ID:</span>
+          <strong id="savedModalEncId">ENC-1001-03</strong>
+        </div>
+      </div>
+
+      <div class="modal-actions-row">
+        <button type="button" class="btn-modal-secondary" id="btnModalViewHistory" data-i18n="view_history_btn">View Patient History</button>
+        <button type="button" class="btn-modal-primary" id="btnModalReturnDashboard" data-i18n="return_dashboard">Return to Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Document & OCR Comparison Viewer -->
+  <div class="modal-overlay" id="modalDocViewer">
+    <div class="modal-card modal-large-viewer">
+      <div class="modal-header-bar">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title" id="docViewerTitle">Blood Chemistry &amp; Lipid Panel Report</h3>
+          <span class="modal-tag" id="docViewerMeta">Uploaded 06 Sep 2026 • Laboratory Report</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnCloseDocViewer">&times;</button>
+      </div>
+
+      <div class="doc-viewer-split-body">
+        <!-- Left: Original Document Preview -->
+        <div class="viewer-pane pane-original">
+          <h4 class="pane-title" data-i18n="original_document">ORIGINAL DOCUMENT</h4>
+          <div class="original-doc-preview" id="docOriginalPreviewBox">
+            <div class="mock-doc-sheet">
+              <div class="doc-sheet-header">
+                <h4>APOLLO DIAGNOSTICS LABORATORY</h4>
+                <p>NABL Accredited • Test Report</p>
+              </div>
+              <div class="doc-sheet-content" id="docSheetContent">
+                <pre>PATIENT: Ravi Kumar  | AGE: 42 | GENDER: M
+DATE: 06-Sep-2026
+---------------------------------------------
+TEST NAME              RESULT      REF RANGE
+Fasting Blood Sugar    138 mg/dL   70-99
+HbA1c Glycated Hgb     7.1 %       &lt; 5.7
+Total Cholesterol      214 mg/dL   &lt; 200
+Triglycerides          188 mg/dL   &lt; 150
+HDL Cholesterol        38 mg/dL    &gt; 40
+LDL Cholesterol        138 mg/dL   &lt; 100
+Serum Creatinine       0.9 mg/dL   0.7-1.2</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: OCR / AI Extracted Information -->
+        <div class="viewer-pane pane-extracted">
+          <h4 class="pane-title" data-i18n="extracted_ocr">OCR / AI EXTRACTION</h4>
+          <div class="extracted-details-scroll">
+            <div class="ext-field">
+              <span class="ext-label">Diagnosis / Impression</span>
+              <p class="ext-val" id="ocrExtDiagnosis">Type 2 Diabetes &amp; Mild Dyslipidemia</p>
+            </div>
+            <div class="ext-field">
+              <span class="ext-label">Extracted Medications</span>
+              <p class="ext-val" id="ocrExtMedications">Metformin 500mg, Atorvastatin (recommended)</p>
+            </div>
+            <div class="ext-field">
+              <span class="ext-label">Lab Results Key-Value Extraction</span>
+              <div class="ext-lab-table" id="ocrExtLabTable">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+            <div class="ext-field">
+              <span class="ext-label">Raw OCR Text</span>
+              <pre class="raw-ocr-text" id="ocrExtRawText"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Edit AI History -->
+  <div class="modal-overlay" id="modalEditAiHistory">
+    <div class="modal-card modal-edit-card">
+      <div class="modal-header-bar">
+        <h3 class="modal-title" data-i18n="edit_history">Edit AI Clinical History</h3>
+        <button type="button" class="modal-close-btn" id="btnCloseEditHistory">&times;</button>
+      </div>
+      <form id="formEditHistory" class="modal-form-body">
+        <div class="form-group">
+          <label class="form-label">Chief Complaint</label>
+          <input type="text" id="editChiefComplaint" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Past Medical History</label>
+          <input type="text" id="editPastMedical" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Current Medications</label>
+          <input type="text" id="editMedications" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Allergies</label>
+          <input type="text" id="editAllergies" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Family History</label>
+          <input type="text" id="editFamily" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Doctor Notes / Modifications</label>
+          <textarea id="editDoctorNotes" class="form-textarea" rows="2"></textarea>
+        </div>
+        <div class="modal-actions-row">
+          <button type="button" class="btn-modal-secondary" id="btnCancelEditHistory">Cancel</button>
+          <button type="submit" class="btn-modal-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Patient Document Upload -->
+  <div class="modal-overlay" id="modalPatientUpload">
+    <div class="modal-card modal-upload-card">
+      <div class="modal-header-bar">
+        <h3 class="modal-title" data-i18n="upload_btn">Upload Medical Document</h3>
+        <button type="button" class="modal-close-btn" id="btnCloseUploadModal">&times;</button>
+      </div>
+      <form id="formPatientUploadDoc" class="modal-form-body">
+        <div class="form-group">
+          <label class="form-label">Document Title</label>
+          <input type="text" id="inputDocTitle" class="form-input" placeholder="e.g., Blood Test Report / Discharge Summary" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Document Type</label>
+          <select id="selectDocType" class="form-input">
+            <option value="Laboratory Report">Laboratory Report</option>
+            <option value="Prescription">Prescription</option>
+            <option value="Discharge Summary">Discharge Summary</option>
+            <option value="Imaging / X-Ray">Imaging / X-Ray</option>
+            <option value="Other">Other Medical Document</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Choose File (PDF, Image)</label>
+          <input type="file" id="inputFileDoc" class="form-input file-input" accept=".pdf,.png,.jpg,.jpeg">
+        </div>
+        <div class="modal-actions-row">
+          <button type="button" class="btn-modal-secondary" id="btnCancelUploadDoc">Cancel</button>
+          <button type="submit" class="btn-modal-primary">Upload &amp; Store</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Socket.IO Client Library -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+  <!-- Core App Scripts -->
+  <script src="/static/js/audio_recorder.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

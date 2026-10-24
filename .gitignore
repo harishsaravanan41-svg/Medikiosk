@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Runtime Data
+data/sessions/*
+!data/sessions/.gitkeep
+data/uploads/*
+!data/uploads/.gitkeep
+data/*.json
+data/*.db
+data/*.sqlite3
+data/*.sqlite
+!data/.gitkeep
+app/static/audio/*
+!app/static/audio/.gitkeep
+*.mp3
+*.wav
+
+# Binaries
+bin/
+bin/*.exe
+*.exe
+piper.exe
+ffmpeg.exe
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
