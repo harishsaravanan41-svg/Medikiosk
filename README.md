@@ -101,6 +101,13 @@ Medikiosk/
 │   ├── triage_records.json
 │   └── sessions/
 │
+├── qwen-compliance-api/             # Local Fine-Tuned Qwen 2.5 LoRA API Server
+│   ├── app/                         # FastAPI model server application
+│   ├── adapter_config.json          # LoRA adapter configuration
+│   ├── adapter_model.safetensors    # Fine-tuned model weights
+│   ├── tokenizer.json               # Qwen tokenizer definitions
+│   └── requirements.txt             # Model server dependencies
+│
 ├── scripts/                         # Automation & Launcher Scripts
 │   ├── start_medikiosk.bat          # Windows one-click start script
 │   ├── run_qwen_server.bat          # Local Qwen 2.5 API launcher

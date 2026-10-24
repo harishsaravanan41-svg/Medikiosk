@@ -283,8 +283,9 @@ python scripts/verify_all.py
 
 ### 1. Start Qwen Compliance Server
 ```bash
-cd c:\Users\Harish\Desktop\MEDIKIOSK\qwen-compliance-api-main\qwen-compliance-api-main
+cd Medikiosk\qwen-compliance-api
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+# Or simply run: python scripts\run_qwen_server.py
 ```
 
 ### 2. Start MediKiosk Flask Application

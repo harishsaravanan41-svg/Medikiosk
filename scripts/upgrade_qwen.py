@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 schemas_content = '''from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
@@ -375,7 +376,15 @@ async def chat_stream(
     return StreamingResponse(token_generator(), media_type="text/event-stream")
 '''
 
-target_dir = r"c:\Users\Harish\Desktop\MEDIKIOSK\qwen-compliance-api-main\qwen-compliance-api-main\app"
+repo_root = Path(__file__).resolve().parent.parent
+candidate_app_dirs = [
+    repo_root / "qwen-compliance-api" / "app",
+    repo_root / "qwen-compliance-api-main" / "app",
+    repo_root.parent / "qwen-compliance-api-main" / "qwen-compliance-api-main" / "app",
+]
+target_dir = next((str(p) for p in candidate_app_dirs if p.exists()), None)
+if not target_dir:
+    raise FileNotFoundError("Could not find Qwen app directory in candidate paths.")
 
 with open(os.path.join(target_dir, "schemas.py"), "w", encoding="utf-8") as f:
     f.write(schemas_content)

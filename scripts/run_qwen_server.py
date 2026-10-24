@@ -16,13 +16,23 @@ if hasattr(sys.stderr, "reconfigure"):
 import uvicorn
 
 if __name__ == "__main__":
-    # scripts/run_qwen_server.py -> project root -> parent (MEDIKIOSK dir)
     scripts_dir = Path(__file__).resolve().parent
-    base_dir = scripts_dir.parent.parent
-    qwen_dir = base_dir / "qwen-compliance-api-main" / "qwen-compliance-api-main"
-    
-    if not qwen_dir.exists():
-        print(f"Error: Qwen directory not found at {qwen_dir}")
+    repo_root = scripts_dir.parent
+    base_dir = repo_root.parent
+
+    candidate_paths = [
+        repo_root / "qwen-compliance-api",
+        repo_root / "qwen-compliance-api-main",
+        base_dir / "qwen-compliance-api-main" / "qwen-compliance-api-main",
+        base_dir / "qwen-compliance-api-main",
+    ]
+
+    qwen_dir = next((p for p in candidate_paths if p.exists() and (p / "app").exists()), None)
+
+    if not qwen_dir:
+        print("Error: Qwen directory not found in candidate paths:")
+        for p in candidate_paths:
+            print(f"  - {p}")
         sys.exit(1)
         
     os.chdir(str(qwen_dir))
